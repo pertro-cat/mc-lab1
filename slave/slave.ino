@@ -1,10 +1,4 @@
-#include <ESP8266WiFi.h>
-#include <ESP8266mDNS.h>
-#include <ESPAsyncTCP.h>
-#include <ESPAsyncWebServer.h>
-#include <WiFiClient.h>
-#include "indexHtml.h"
-#include "wifi.h"
+#include <SoftwareSerial.h>
 #include "btn.h"
 
 const uint8_t btnGPIO = 13;
@@ -14,6 +8,8 @@ const uint8_t btnGPIO = 13;
 #define BLINK_TIME  1000
 #define PIN_DEFOULT 3
 #define PIN_ALGO 4
+#define TX 1
+#define RX 3
 
 unsigned long lastHoldTime = 0;
 unsigned long currentDelay = 0;
@@ -22,10 +18,12 @@ unsigned long lastClickTime = 0;
 bool btnHold = false;
 bool isPressBtn = false;
 bool algoBlink = false;
-bool siteBtnPressed = false;
 
 const uint8_t defaulLED[] = {LED1GPIO, LED2GPIO, LED3GPIO};
 const uint8_t algolLED[] = {LED3GPIO, LED2GPIO, LED1GPIO, LED2GPIO, LED3GPIO};
+
+SoftwareSerial mySerial(TX, RX);
+
 
 void pinsSetup()
 {
@@ -43,9 +41,9 @@ void pinsSetup()
 void setup()
 {
     Serial.begin(115200);
+    mySerial.begin(9600);
+
     pinsSetup();
-    initWiFi();
-    InitMDNS();
 }
 
 uint8_t currentLED = 0;
@@ -87,8 +85,13 @@ void do_algorithm()
 
 void loop()
 {
-    MDNS.update();
     buttonHold();
     do_algorithm();
-    checkSiteBtn();
+
+    if (mySerial.available()) 
+    {
+        String received = mySerial.readString();
+        Serial.print("Отримано: ");
+        Serial.println(received);
+    }
 }
