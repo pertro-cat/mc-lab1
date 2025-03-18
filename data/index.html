@@ -74,13 +74,41 @@
 <body>
     <h1>ESP Pushbutton Web Server</h1>
     <!-- onmousedown / onmouseup - on PC/Laptop, ontouchend / ontouchstart - on mobile -->
-<button class="button" onclick="algorighm1();">Click me</button>
+<button class="button" onclick="algorighm1();">Algo on mini</button>
+<button class="button" onclick="algorighm2();">Algo on big</button>
+
+<div class="container">
+    <h2>Mini</h2>
+    <div id="led1" class="leds"></div>
+    <div id="led2" class="leds"></div>
+    <div id="led3" class="leds"></div>
+</div>
+
+<div class="container">
+    <h2>Big</h2>
+    <div id="led4" class="leds"></div>
+    <div id="led5" class="leds"></div>
+    <div id="led6" class="leds"></div>
+</div>
+
 
 
 
 <script>
+        var led1 = document.getElementById('led1');
+        var led2 = document.getElementById('led2');
+        var led3 = document.getElementById('led3');
 
-    function algorighm1(x) {
+        var led4 = document.getElementById('led4');
+        var led5 = document.getElementById('led5');
+        var led6 = document.getElementById('led6');
+
+    function algorighm1() {
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "/" + x, true);
+        xhr.send();
+    }
+    function algorighm2() {
         var xhr = new XMLHttpRequest();
         xhr.open("GET", "/" + x, true);
         xhr.send();
