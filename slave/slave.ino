@@ -1,4 +1,5 @@
 #include <SoftwareSerial.h>
+#include "UART.h"
 #include "btn.h"
 
 const uint8_t btnGPIO = 13;
@@ -89,14 +90,8 @@ void loop()
 {
     buttonHold();
     do_algorithm();
+    giveDataUsingUART();
 
-    if (mySerial.available() > 0) 
-    {
-        char input = mySerial.read();
-        Serial.println(input);
-        
-        // String received = mySerial.readString();
-        // Serial.print("Отримано: ");
-        // Serial.println(received);
-    }
+
+
 }
