@@ -102,15 +102,21 @@
         var led4 = document.getElementById('led4');
         var led5 = document.getElementById('led5');
         var led6 = document.getElementById('led6');
+    
 
+    let isOn1 = false;
     function algorighm1() {
+        isOn1 = !isOn1; 
         var xhr = new XMLHttpRequest();
-        xhr.open("GET", "/" + x, true);
+        xhr.open("GET", isOn1 ? "/on_alg1" : "/off_alg1", true);
         xhr.send();
     }
+
+    let isOn2 = false;
     function algorighm2() {
+        isOn2 = !isOn2; 
         var xhr = new XMLHttpRequest();
-        xhr.open("GET", "/" + x, true);
+        xhr.open("GET", isOn2 ? "/on_alg2" : "/off_alg2", true);
         xhr.send();
     }
     </script>

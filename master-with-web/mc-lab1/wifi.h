@@ -2,7 +2,7 @@
 #define WIFI_H
 
 #include <ESPAsyncWebServer.h>
-AsyncWebServer server(80); // Порт 80 для HTTP-з'єднання
+AsyncWebServer server(80);
 
 #ifndef ESP_WIFI_MODE
 #define ESP_WIFI_MODE 1
@@ -19,6 +19,7 @@ AsyncWebServer server(80); // Порт 80 для HTTP-з'єднання
 #define HOST_NAME "lvivske1715"
 
 extern bool siteBtnPressed;
+extern bool siteBtnPressedUART;
 void notFound(AsyncWebServerRequest *request);
 
 uint8_t initWiFi()
@@ -70,10 +71,20 @@ uint8_t initWiFi()
     server.on("/off_alg1", HTTP_GET, [](AsyncWebServerRequest *request)
               {
     siteBtnPressed = false;
-
     Serial.println("site bnt false");
-
     request->send(200, "text/plain", "ok"); });
+
+    server.on("/on_alg2", HTTP_GET, [](AsyncWebServerRequest *request)
+              {
+        siteBtnPressedUART = true;
+        Serial.println("site bnt1 true");
+        request->send(200, "text/plain", "ok"); });
+
+    server.on("/off_alg2", HTTP_GET, [](AsyncWebServerRequest *request)
+              {
+        siteBtnPressedUART = false;
+        Serial.println("site bnt1 false");
+        request->send(200, "text/plain", "ok"); });
 
     server.onNotFound(notFound);
     server.begin();

@@ -10,6 +10,8 @@ const uint8_t btnGPIO = 13;
 #define PIN_ALGO 4
 #define TX 1
 #define RX 3
+#define SERIAL_SPEED_PC 115200
+#define SERIAL_SPEED_UART 115200
 
 unsigned long lastHoldTime = 0;
 unsigned long currentDelay = 0;
@@ -40,8 +42,8 @@ void pinsSetup()
 
 void setup()
 {
-    Serial.begin(115200);
-    mySerial.begin(9600);
+    Serial.begin(SERIAL_SPEED_PC);
+    mySerial.begin(SERIAL_SPEED_UART);
 
     pinsSetup();
 }
@@ -88,10 +90,13 @@ void loop()
     buttonHold();
     do_algorithm();
 
-    if (mySerial.available()) 
+    if (mySerial.available() > 0) 
     {
-        String received = mySerial.readString();
-        Serial.print("Отримано: ");
-        Serial.println(received);
+        char input = mySerial.read();
+        Serial.println(input);
+        
+        // String received = mySerial.readString();
+        // Serial.print("Отримано: ");
+        // Serial.println(received);
     }
 }

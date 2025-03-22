@@ -7,8 +7,11 @@
 #include "indexHtml.h"
 #include "wifi.h"
 #include "btn.h"
+#include "UART.h"
 
 const uint8_t btnGPIO = 13;
+const uint8_t btnGPI1 = 5;
+
 #define LED1GPIO  0
 #define LED2GPIO  14
 #define LED3GPIO  12
@@ -17,20 +20,27 @@ const uint8_t btnGPIO = 13;
 #define PIN_ALGO 4
 #define TX 1
 #define RX 3
+#define SERIAL_SPEED_PC 115200
+#define SERIAL_SPEED_UART 115200
 
 unsigned long lastHoldTime = 0;
 unsigned long currentDelay = 0;
 unsigned long lastClickTime = 0;
 
 bool btnHold = false;
+
 bool isPressBtn = false;
 bool algoBlink = false;
 bool siteBtnPressed = false;
 
+bool UARTBtnState = false;
+bool btnHoldUART = false;
+bool siteBtnPressedUART = false;
+
 const uint8_t defaulLED[] = {LED1GPIO, LED2GPIO, LED3GPIO};
 const uint8_t algolLED[] = {LED3GPIO, LED2GPIO, LED1GPIO, LED2GPIO, LED3GPIO};
 
-SoftwareSerial mySerial(RX, TX);
+SoftwareSerial mySerial(RX, TX, "SERIAL_6O1");
 
 void pinsSetup()
 {
@@ -47,8 +57,8 @@ void pinsSetup()
 
 void setup()
 {
-    Serial.begin(115200);
-    mySerial.begin(9600);
+    Serial.begin(SERIAL_SPEED_PC);
+    mySerial.begin(SERIAL_SPEED_UART);
     pinsSetup();
     initWiFi();
     InitMDNS();
@@ -72,7 +82,6 @@ void do_algorithm()
             digitalWrite(algolLED[currentLED], HIGH);
             Serial.println(currentLED);
             Serial.println("algo blink");
-            mySerial.print("on");
             
 
             currentLED = (currentLED + 1) % (sizeof(algolLED) / sizeof(algolLED[0]));
@@ -87,7 +96,6 @@ void do_algorithm()
             digitalWrite(defaulLED[currentLED], HIGH);
             Serial.println(currentLED);
             Serial.println("default blink");
-            mySerial.print("off");
 
 
 
@@ -102,10 +110,9 @@ void loop()
     buttonHold();
     do_algorithm();
     checkSiteBtn();
+    buttonHoldUART();
+    checkSiteBtnUART();
+    sentDataUsingUART();
 
-        if (Serial.available()) 
-    {
-        String message = Serial.readString();
-        mySerial.print(message); // Передаємо повідомлення по UART
-    }
+
 }
