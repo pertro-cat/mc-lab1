@@ -2,9 +2,8 @@
 #define BTN_H
 
 #include <Arduino.h>
-#include <SoftwareSerial.h>
-extern SoftwareSerial mySerial;
 #define HOLD_TIME 2000
+// #define HOLD_TIME1 200
 
 extern const uint8_t btnGPIO;
 extern const uint8_t btnGPI1;
@@ -14,7 +13,7 @@ extern unsigned long lastClickTime;
 extern unsigned long currentDelay;
 
 extern bool btnHold;
-extern bool btnHoldUART;
+// extern bool btnHoldUART;
 extern bool UARTBtnState;
 
 extern bool isPressBtn;
@@ -48,23 +47,18 @@ void buttonHold()
 
 void buttonHoldUART()
 {
-    if (!digitalRead(btnGPI1))
-    {
-        if (!btnHoldUART)
-        {
-            lastHoldTime = millis();
-            btnHoldUART = true;
-        }
+    static bool lastState = HIGH; 
 
-        if (millis() - lastHoldTime >= HOLD_TIME)
-        {
-            UARTBtnState = !UARTBtnState;
-        }
-    }
-    else
+    if (!digitalRead(btnGPI1) && lastState == HIGH) 
     {
-        btnHoldUART = false;
+        UARTBtnState = true; 
     }
+    else if (digitalRead(btnGPI1) && lastState == LOW) 
+    {
+        UARTBtnState = false; 
+    }
+
+    lastState = digitalRead(btnGPI1); 
 }
 
 void checkSiteBtn()

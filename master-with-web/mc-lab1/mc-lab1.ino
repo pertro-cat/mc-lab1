@@ -34,7 +34,7 @@ bool algoBlink = false;
 bool siteBtnPressed = false;
 
 bool UARTBtnState = false;
-bool btnHoldUART = false;
+// bool btnHoldUART = false;
 bool siteBtnPressedUART = false;
 
 const uint8_t defaulLED[] = {LED1GPIO, LED2GPIO, LED3GPIO};
