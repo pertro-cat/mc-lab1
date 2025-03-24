@@ -2,7 +2,7 @@
 #define UART_H
 #include <SoftwareSerial.h>
 extern SoftwareSerial mySerial;
-uint8_t controll = 0b01001010;
+char controll = 0b01001010;
 
 extern bool UARTBtnState;
 

@@ -3,14 +3,15 @@
 #include <SoftwareSerial.h>
 extern SoftwareSerial mySerial;
 
-uint8_t controll = 0b01001010;
+char controll = 0b01001010;
 extern bool algoBlink;
 
 void giveDataUsingUART()
 {
     if (mySerial.available() > 0)
     {
-        uint8_t input = mySerial.read();
+        char input = mySerial.read();
+        Serial.println(input);
         if (input == controll)
         {
             algoBlink = !algoBlink;

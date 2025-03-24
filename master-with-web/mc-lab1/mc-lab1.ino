@@ -9,7 +9,7 @@
 #include "btn.h"
 #include "UART.h"
 
-const uint8_t btnGPIO = 13;
+const uint8_t btnGPIO = 4;
 const uint8_t btnGPI1 = 5;
 
 #define LED1GPIO  0
@@ -18,8 +18,8 @@ const uint8_t btnGPI1 = 5;
 #define BLINK_TIME  1000
 #define PIN_DEFOULT 3
 #define PIN_ALGO 4
-#define TX 1
-#define RX 3
+#define TX 13
+#define RX 15
 #define SERIAL_SPEED_PC 115200
 #define SERIAL_SPEED_UART 115200
 
@@ -40,7 +40,7 @@ bool siteBtnPressedUART = false;
 const uint8_t defaulLED[] = {LED1GPIO, LED2GPIO, LED3GPIO};
 const uint8_t algolLED[] = {LED3GPIO, LED2GPIO, LED1GPIO, LED2GPIO, LED3GPIO};
 
-SoftwareSerial mySerial(RX, TX, "SERIAL_6O1");
+SoftwareSerial mySerial(TX, RX);
 
 void pinsSetup()
 {
@@ -114,5 +114,6 @@ void loop()
     checkSiteBtnUART();
     sentDataUsingUART();
 
+        
 
 }

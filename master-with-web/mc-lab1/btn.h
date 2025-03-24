@@ -59,7 +59,6 @@ void buttonHoldUART()
         if (millis() - lastHoldTime >= HOLD_TIME)
         {
             UARTBtnState = !UARTBtnState;
-            mySerial.print("ButtonUART is held");
         }
     }
     else

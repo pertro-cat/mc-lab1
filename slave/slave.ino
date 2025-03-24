@@ -2,15 +2,15 @@
 #include "UART.h"
 #include "btn.h"
 
-const uint8_t btnGPIO = 13;
+const uint8_t btnGPIO = 4;
 #define LED1GPIO  0
 #define LED2GPIO  14
 #define LED3GPIO  12
 #define BLINK_TIME  1000
 #define PIN_DEFOULT 3
 #define PIN_ALGO 4
-#define TX 1
-#define RX 3
+#define TX 13
+#define RX 15
 #define SERIAL_SPEED_PC 115200
 #define SERIAL_SPEED_UART 115200
 
