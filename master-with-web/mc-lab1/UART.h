@@ -8,13 +8,12 @@ extern bool UARTBtnState;
 
 void sentDataUsingUART()
 {
-    if (UARTBtnState)
+    static bool lastState = false;
+
+    if (UARTBtnState != lastState)
     {
-        mySerial.print(controll);
-    }
-    else
-    {
-        mySerial.print(controll);
+        mySerial.write(controll);
+        lastState = UARTBtnState;
     }
 }
 
