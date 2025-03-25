@@ -3,7 +3,6 @@
 
 #include <Arduino.h>
 #define HOLD_TIME 2000
-// #define HOLD_TIME1 200
 
 extern const uint8_t btnGPIO;
 extern const uint8_t btnGPI1;
@@ -47,18 +46,18 @@ void buttonHold()
 
 void buttonHoldUART()
 {
-    static bool lastState = HIGH; 
+    static bool lastState = HIGH;
 
-    if (!digitalRead(btnGPI1) && lastState == HIGH) 
+    if (!digitalRead(btnGPI1) && lastState == HIGH)
     {
-        UARTBtnState = true; 
+        UARTBtnState = true;
     }
-    else if (digitalRead(btnGPI1) && lastState == LOW) 
+    else if (digitalRead(btnGPI1) && lastState == LOW)
     {
-        UARTBtnState = false; 
+        UARTBtnState = false;
     }
 
-    lastState = digitalRead(btnGPI1); 
+    lastState = digitalRead(btnGPI1);
 }
 
 void checkSiteBtn()

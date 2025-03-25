@@ -34,13 +34,12 @@ bool algoBlink = false;
 bool siteBtnPressed = false;
 
 bool UARTBtnState = false;
-// bool btnHoldUART = false;
 bool siteBtnPressedUART = false;
 
 const uint8_t defaulLED[] = {LED1GPIO, LED2GPIO, LED3GPIO};
 const uint8_t algolLED[] = {LED3GPIO, LED2GPIO, LED1GPIO, LED2GPIO, LED3GPIO};
 
-SoftwareSerial mySerial(TX, RX);
+SoftwareSerial mySerial(TX, RX, SWSERIAL_6O1);
 
 void pinsSetup()
 {

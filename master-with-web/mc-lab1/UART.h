@@ -10,8 +10,8 @@ void sentDataUsingUART()
 {
     if (UARTBtnState)
     {
-        mySerial.write(controll); // Надсилає символ лише раз при натисканні
-        UARTBtnState = false;     // Після відправки одразу скидаємо стан
+        mySerial.write(controll);
+        UARTBtnState = false;
     }
 }
 
