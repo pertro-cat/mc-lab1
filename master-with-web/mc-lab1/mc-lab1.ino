@@ -8,20 +8,8 @@
 #include "wifi.h"
 #include "btn.h"
 #include "UART.h"
+#include "pins.h"
 
-const uint8_t btnGPIO = 4;
-const uint8_t btnGPI1 = 5;
-
-#define LED1GPIO  0
-#define LED2GPIO  14
-#define LED3GPIO  12
-#define BLINK_TIME  1000
-#define PIN_DEFOULT 3
-#define PIN_ALGO 4
-#define TX 13
-#define RX 15
-#define SERIAL_SPEED_PC 115200
-#define SERIAL_SPEED_UART 115200
 
 unsigned long lastHoldTime = 0;
 unsigned long currentDelay = 0;
@@ -40,6 +28,7 @@ const uint8_t defaulLED[] = {LED1GPIO, LED2GPIO, LED3GPIO};
 const uint8_t algolLED[] = {LED3GPIO, LED2GPIO, LED1GPIO, LED2GPIO, LED3GPIO};
 
 SoftwareSerial mySerial(TX, RX, SWSERIAL_6O1);
+
 
 void pinsSetup()
 {
@@ -112,7 +101,7 @@ void loop()
     buttonHoldUART();
     checkSiteBtnUART();
     sentDataUsingUART();
-
+    giveDataUsingUART();
         
 
 }

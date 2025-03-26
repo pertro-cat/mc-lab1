@@ -4,19 +4,17 @@
 #include <ESPAsyncWebServer.h>
 AsyncWebServer server(80);
 
-#ifndef ESP_WIFI_MODE
 #define ESP_WIFI_MODE 1
-#endif
 
-#ifndef SSID
 #define SSID "admin"
-#endif
-
-#ifndef PASSWORD
 #define PASSWORD "domestos1216"
-#endif
 
-#define HOST_NAME "lvivske1715"
+// #define SSID "611VVA"
+// #define PASSWORD "123qwerty9"
+// #define HOST_NAME "lvivske1715" // mini
+#define HOST_NAME "teteriv" // big
+
+#include "pins.h"
 
 extern bool siteBtnPressed;
 extern bool siteBtnPressedUART;
@@ -27,7 +25,6 @@ uint8_t initWiFi()
     if (ESP_WIFI_MODE == 1)
     {
         WiFi.mode(WIFI_STA);
-        // Connect to Wi-Fi network with SSID and password
         WiFi.begin(SSID, PASSWORD);
 
         while (WiFi.status() != WL_CONNECTED)
@@ -46,7 +43,6 @@ uint8_t initWiFi()
     {
         WiFi.mode(WIFI_AP);
         Serial.println("Setting AP (Access Point)…");
-        // Remove the password parameter, if you want the AP (Access Point) to be open
         WiFi.softAP(SSID, NULL);
 
         IPAddress IP = WiFi.softAPIP();
@@ -85,6 +81,15 @@ uint8_t initWiFi()
         siteBtnPressedUART = false;
         Serial.println("site bnt1 false");
         request->send(200, "text/plain", "ok"); });
+
+    server.on("/status_led_1", HTTP_GET, [](AsyncWebServerRequest *request)
+              { request->send(200, "text/plain", String(digitalRead(LED1GPIO)).c_str()); });
+
+    server.on("/status_led_2", HTTP_GET, [](AsyncWebServerRequest *request)
+              { request->send(200, "text/plain", String(digitalRead(LED2GPIO)).c_str()); });
+
+    server.on("/status_led_3", HTTP_GET, [](AsyncWebServerRequest *request)
+              { request->send(200, "text/plain", String(digitalRead(LED3GPIO)).c_str()); });
 
     server.onNotFound(notFound);
     server.begin();
