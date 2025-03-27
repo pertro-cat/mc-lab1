@@ -4,7 +4,9 @@
 #include <ESPAsyncWebServer.h>
 AsyncWebServer server(80);
 
-#define ESP_WIFI_MODE 1
+#define ESP_WIFI_MODE DEVICE_WIFI
+#define DEVICE_WIFI 1
+#define AP_WIFI 2
 
 #define SSID "admin"
 #define PASSWORD "domestos1216"
@@ -22,7 +24,7 @@ void notFound(AsyncWebServerRequest *request);
 
 uint8_t initWiFi()
 {
-    if (ESP_WIFI_MODE == 1)
+    if (ESP_WIFI_MODE == DEVICE_WIFI)
     {
         WiFi.mode(WIFI_STA);
         WiFi.begin(SSID, PASSWORD);
@@ -39,7 +41,7 @@ uint8_t initWiFi()
         Serial.print("RRSI: ");
         Serial.println(WiFi.RSSI());
     }
-    else if (ESP_WIFI_MODE == 2)
+    else if (ESP_WIFI_MODE == AP_WIFI)
     {
         WiFi.mode(WIFI_AP);
         Serial.println("Setting AP (Access Point)…");
